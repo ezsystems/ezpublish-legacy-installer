@@ -23,7 +23,7 @@ class LegacyInstaller extends LibraryInstaller
     {
         parent::__construct( $io, $composer, $type );
         $options = $composer->getPackage()->getExtra();
-        $this->ezpublishLegacyDir = isset( $options['ezpublish-legacy-dir'] ) ? rtrim( $options['ezpublish-legacy-dir'], '/' ) : '';
+        $this->ezpublishLegacyDir = isset( $options['ezpublish-legacy-dir'] ) ? rtrim( $options['ezpublish-legacy-dir'], '/' ) : '.';
     }
 
     /**
@@ -46,11 +46,7 @@ class LegacyInstaller extends LibraryInstaller
      */
     public function getInstallPath( PackageInterface $package )
     {
-        if ( $package->getType() === 'ezpublish-legacy-extension' )
-        {
-            return $this->ezpublishLegacyDir . '/extension';
-        }
-
-        return parent::getInstallPath( $package );
+        list( $vendor, $packageName ) = explode( '/', $package->getPrettyName(), 2 );
+        return $this->ezpublishLegacyDir . '/extension/' . $packageName;
     }
 }
