@@ -35,7 +35,7 @@ class LegacyInstaller extends LibraryInstaller
      */
     public function supports( $packageType )
     {
-        $packageType === 'ezpublish-legacy-extension';
+        return $packageType === 'ezpublish-legacy-extension';
     }
 
     /**
