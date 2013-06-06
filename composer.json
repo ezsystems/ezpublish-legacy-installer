@@ -1,7 +1,7 @@
 {
     "name": "ezsystems/ezpublish-legacy-extension-installer",
     "type": "composer-installer",
-    "description": "Installer for eZ Publish legacy extensions.",
+    "description": "Installer for eZ Publish legacy extensions",
     "license": "GPL-2.0",
     "minimum-stability": "dev",
     "authors": [
