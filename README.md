@@ -3,7 +3,8 @@
 This installer lets you install extensions for eZ Publish legacy (4.x) with [Composer](http://getcomposer.org).
 
 ## Installable extensions
-To be able to install a legacy extension, it must be properly exposed to Composer with a valid composer.json file (check [Composer documentation](http://getcomposer.org/doc/) for more information), declaring an `ezpublish-legacy-extension` type.
+To be able to install a legacy extension, it must be properly exposed to Composer with a valid composer.json file
+(check [Composer documentation](http://getcomposer.org/doc/) for more information), declaring an `ezpublish-legacy-extension` type.
 
 Example for SQLIImport:
 
@@ -22,7 +23,7 @@ Example for SQLIImport:
 ```
 
 ## How to install in my project
-All you need to do is creating a composer.json at the root of your project and require the extension:
+All you need to do is create a composer.json at the root of your project and require the extension:
 
 ```json
 {
@@ -37,10 +38,12 @@ All you need to do is creating a composer.json at the root of your project and r
 }
 ```
 
-Then run `php composer.phar install` (assuming you already properly installed Composer of course :wink:).
+Then run `php composer.phar install` (assuming you have already properly installed Composer of course :wink:).
 
 ### eZ Publish 5 case
-By default, the legacy extension installer assumes that eZ Publish legacy is installed in the current folder. If this is not the case (like in eZ Publish 5, where it relies in `ezpublish_legacy/` folder), then you'll need to configure where it is:
+By default, the legacy extension installer assumes that eZ Publish legacy is installed in the current folder; in other
+words, it is configured for pure-eZ Publish 4 projects.
+If this is not the case (like in eZ Publish 5, where it resides in the `ezpublish_legacy/` folder), then you'll need to configure where it is:
 
 ```json
 {
