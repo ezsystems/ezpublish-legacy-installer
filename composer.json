@@ -1,0 +1,19 @@
+{
+    "name": "ezsystems/ezpublish-legacy-extension-installer",
+    "type": "composer-installer",
+    "description": "Installer for eZ Publish legacy extensions.",
+    "license": "GPL-2.0",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Jérôme Vieilledent",
+            "email": "lolautruche@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {"eZ\\Publish\\Composer": "src/"}
+    },
+    "extra": {
+        "class": "eZ\\Publish\\Composer\\LegacyInstaller"
+    }
+}
