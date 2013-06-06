@@ -38,7 +38,7 @@ All you need to do is create a composer.json at the root of your project and req
     },
     "repositories" : [
         {
-             "type": "git",
+             "type": "vcs",
              "url": "https://github.com/lolautruche/sqliimport.git"
         }
     ]
@@ -65,7 +65,7 @@ If this is not the case (like in eZ Publish 5, where it resides in the `ezpublis
     ,
     "repositories" : [
         {
-             "type": "git",
+             "type": "vcs",
              "url": "https://github.com/lolautruche/sqliimport.git"
         }
     ],
