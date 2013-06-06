@@ -23,7 +23,8 @@ Example for SQLIImport:
 ```
 
 ## How to install in my project
-All you need to do is create a composer.json at the root of your project and require the extension:
+All you need to do is create a composer.json at the root of your project and require the extension
+(if the extension is not published on packagist, you also need to tell composer where to find it):
 
 ```json
 {
@@ -34,7 +35,13 @@ All you need to do is create a composer.json at the root of your project and req
     "require": {
         "php": ">=5.3.3",
         "lolautruche/sqliimport": "~1.2"
-    }
+    },
+    "repositories" : [
+        {
+             "type": "vcs",
+             "url": "https://github.com/lolautruche/sqliimport.git"
+        }
+    ]
 }
 ```
 
@@ -55,6 +62,13 @@ If this is not the case (like in eZ Publish 5, where it resides in the `ezpublis
         "php": ">=5.3.3",
         "lolautruche/sqliimport": "~1.2"
     },
+    ,
+    "repositories" : [
+        {
+             "type": "vcs",
+             "url": "https://github.com/lolautruche/sqliimport.git"
+        }
+    ],
     "extra": {
         "ezpublish-legacy-dir": "ezpublish_legacy"
     }
