@@ -62,7 +62,6 @@ If this is not the case (like in eZ Publish 5, where it resides in the `ezpublis
         "php": ">=5.3.3",
         "lolautruche/sqliimport": "~1.2"
     },
-    ,
     "repositories" : [
         {
              "type": "vcs",
