@@ -46,12 +46,19 @@ class LegacyInstaller extends LibraryInstaller
      */
     public function getInstallPath( PackageInterface $package )
     {
-        if ( $package->getType() == 'ezpublish-legacy' )
+        switch( $package->getType() )
         {
-            return $this->ezpublishLegacyDir;
+            case 'ezpublish-legacy':
+            {
+                return $this->ezpublishLegacyDir;
+            }
+            case 'ezpublish-legacy-extension':
+            {
+                list( $vendor, $packageName ) = explode( '/', $package->getPrettyName(), 2 );
+                return $this->ezpublishLegacyDir . '/extension/' . $packageName;
+            }
+            default:
+                throw new \InvalidArgumentException( 'Installer only supports ezpublish-legacy and ezpublish-legacy-extension package types, got instead: ' . $package->getType() );
         }
-        // not ezpublish-legacy by itself: assume it's an extension
-        list( $vendor, $packageName ) = explode( '/', $package->getPrettyName(), 2 );
-        return $this->ezpublishLegacyDir . '/extension/' . $packageName;
     }
 }
