@@ -8,6 +8,10 @@
         {
             "name": "Jérôme Vieilledent",
             "email": "lolautruche@gmail.com"
+        },
+        {
+            "name": "Gaetano Giunta",
+            "email": "gaetano.giunta@ez.no"
         }
     ],
     "autoload": {
