@@ -49,14 +49,10 @@ class LegacyInstaller extends LibraryInstaller
         switch( $package->getType() )
         {
             case 'ezpublish-legacy':
-            {
                 return $this->ezpublishLegacyDir;
-            }
             case 'ezpublish-legacy-extension':
-            {
                 list( $vendor, $packageName ) = explode( '/', $package->getPrettyName(), 2 );
                 return $this->ezpublishLegacyDir . '/extension/' . $packageName;
-            }
             default:
                 throw new \InvalidArgumentException( 'Installer only supports ezpublish-legacy and ezpublish-legacy-extension package types, got instead: ' . $package->getType() );
         }
