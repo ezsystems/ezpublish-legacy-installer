@@ -17,7 +17,7 @@ Example for SQLIImport:
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "ezsystems/ezpublish-legacy-extension-installer": "*"
+        "ezsystems/ezpublish-legacy-installer": "*"
     }
 }
 ```
