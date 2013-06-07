@@ -1,6 +1,6 @@
 <?php
 /**
- * File containing the LegacyInstaller class.
+ * The LegacyInstaller class is used to install eZ Publish legacy via Composer.
  *
  * @copyright Copyright (C) 1999-2013 eZ Systems AS. All rights reserved.
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
@@ -18,6 +18,7 @@ use Composer\Package\PackageInterface;
 class LegacyInstaller extends LibraryInstaller
 {
     private $ezpublishLegacyDir;
+    protected $supportedTypes = array( 'ezpublish-legacy-extension', 'ezpublish-legacy', 'ezpublish-legacy-settings' );
 
     public function __construct( IOInterface $io, Composer $composer, $type = 'ezpublish-legacy-extension' )
     {
@@ -35,7 +36,7 @@ class LegacyInstaller extends LibraryInstaller
      */
     public function supports( $packageType )
     {
-        return $packageType === 'ezpublish-legacy-extension' || $packageType === 'ezpublish-legacy';
+        return in_array( $packageType, $this->supportedTypes );
     }
 
     /**
@@ -53,8 +54,9 @@ class LegacyInstaller extends LibraryInstaller
             case 'ezpublish-legacy-extension':
                 list( $vendor, $packageName ) = explode( '/', $package->getPrettyName(), 2 );
                 return $this->ezpublishLegacyDir . '/extension/' . $packageName;
+            case 'ezpublish-legacy-settings':
+                return $this->ezpublishLegacyDir . '/settings';
             default:
                 throw new \InvalidArgumentException( 'Installer only supports ezpublish-legacy and ezpublish-legacy-extension package types, got instead: ' . $package->getType() );
-        }
-    }
+        }    }
 }
