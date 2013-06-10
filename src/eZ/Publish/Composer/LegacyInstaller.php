@@ -31,7 +31,6 @@ class LegacyInstaller extends LibraryInstaller
      * Decides if the installer supports the given type
      *
      * @param  string $packageType
-     *
      * @return bool
      */
     public function supports( $packageType )
@@ -43,7 +42,8 @@ class LegacyInstaller extends LibraryInstaller
      * Returns the installation path of a package
      *
      * @param  PackageInterface $package
-     * @return string           path
+     * @return string           path for package installation
+     * @throws InvalidArgumentException
      */
     public function getInstallPath( PackageInterface $package )
     {
