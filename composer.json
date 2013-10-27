@@ -18,6 +18,10 @@
         "psr-0": {"eZ\\Publish\\Composer": "src/"}
     },
     "extra": {
-        "class": "eZ\\Publish\\Composer\\LegacyInstaller"
+        "class":  [
+            "eZ\\Publish\\Composer\\LegacyKernelInstaller",
+            "eZ\\Publish\\Composer\\LegacyExtensionInstaller",
+            "eZ\\Publish\\Composer\\LegacySettingsInstaller"
+        ]
     }
 }

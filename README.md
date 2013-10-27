@@ -1,6 +1,9 @@
-# Composer installer for eZ Publish legacy extensions
+# Composer installer for eZ Publish legacy Stack
 
-This installer lets you install extensions for eZ Publish legacy (4.x) with [Composer](http://getcomposer.org).
+This installer lets you install eZ Publish legacy (4.x) with [Composer](http://getcomposer.org).
+
+It also helps you install eZ Publish legacy (4.x) itself, by not deleting your settings and custom code
+when you upgrade to a new release.
 
 ## Installable extensions
 To be able to install a legacy extension, it must be properly exposed to Composer with a valid composer.json file
@@ -73,3 +76,26 @@ If this is not the case (like in eZ Publish 5, where it resides in the `ezpublis
     }
 }
 ```
+
+## Installable settings
+You can also create a package containing pure configuration settings, and deploy it via composer.
+To create a settings package, the directory structure must be the following:
+
+```
+|__composer.json
+|
+|__siteaccess
+|  |
+|  |__<siteaccess_name>
+|     |
+|     |__<filename>.ini.append.php
+|
+|__override
+   |
+   |__<filename>.ini.append.php
+```
+
+The composer.json file is in this case almost the same as the one needed for an Extension, with the only
+difference that you will have to use
+
+"type": "ezpublish-legacy-settings"
