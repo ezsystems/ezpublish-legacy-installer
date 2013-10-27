@@ -1,6 +1,6 @@
 {
     "name": "ezsystems/ezpublish-legacy-installer",
-    "type": "composer-installer",
+    "type": "composer-plugin",
     "description": "Installer for eZ Publish legacy extensions and legacy kernel itself.",
     "license": "GPL-2.0",
     "minimum-stability": "dev",
@@ -18,9 +18,9 @@
         "psr-0": {"eZ\\Publish\\Composer": "src/"}
     },
     "extra": {
-        "class":  [
-            "eZ\\Publish\\Composer\\LegacyKernelInstaller",
-            "eZ\\Publish\\Composer\\LegacyExtensionInstaller"
-        ]
+        "class": "eZ\\Publish\\Composer\\InstallerPlugin"
+    },
+    "require": {
+        "composer-plugin-api": "1.0.0"
     }
 }
