@@ -14,8 +14,11 @@ use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 
 /**
- * All this class does is to tell composer that extensions have to be installed in a
- * different directory
+ * Installer for legacy extensions.
+ *
+ * All this class does is to tell Composer that extensions have to be installed in a different directory.
+ * Package name of the extension will be the name of the extension folder.
+ * E.g., for "ezsystems/ezfind", it will be installed under extension/ezfind/ directory.
  */
 class LegacyExtensionInstaller extends LegacyInstaller
 {
@@ -29,5 +32,4 @@ class LegacyExtensionInstaller extends LegacyInstaller
         list( $vendor, $packageName ) = explode( '/', $package->getPrettyName(), 2 );
         return parent::getInstallPath( $package ) . '/extension/' . $packageName;
     }
-
 }
