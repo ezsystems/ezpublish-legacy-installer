@@ -1,6 +1,9 @@
-# Composer installer for eZ Publish legacy extensions
+# Composer installer for eZ Publish Legacy Stack
 
 This installer lets you install extensions for eZ Publish legacy (4.x) with [Composer](http://getcomposer.org).
+
+It also helps you install eZ Publish legacy (4.x) itself, by not deleting your settings and custom code
+when you upgrade to a new release.
 
 ## Installable extensions
 To be able to install a legacy extension, it must be properly exposed to Composer with a valid composer.json file
