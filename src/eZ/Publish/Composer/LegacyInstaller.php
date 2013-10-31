@@ -13,8 +13,15 @@ use Composer\Installer\LibraryInstaller;
 use Composer\Package\PackageInterface;
 use InvalidArgumentException;
 
-class LegacyInstaller extends LibraryInstaller
+/**
+ * Abstract installer.
+ * It defines the specific install path.
+ */
+abstract class LegacyInstaller extends LibraryInstaller
 {
+    /**
+     * @var string Directory where eZ Publish legacy will be installed.
+     */
     protected $ezpublishLegacyDir;
 
     public function __construct( IOInterface $io, Composer $composer, $type = '' )
@@ -40,5 +47,4 @@ class LegacyInstaller extends LibraryInstaller
 
         return $this->ezpublishLegacyDir;
     }
-
 }
