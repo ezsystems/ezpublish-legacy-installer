@@ -14,8 +14,8 @@ use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 
 /**
- * All this class does is to tell composer that extensions have to be installed in a
- * different directory
+ * Installer for eZ Publish legacy extensions.
+ * Ensures that packages are correctly placed in ezpublish_legacy/extension folder.
  */
 class LegacyExtensionInstaller extends LegacyInstaller
 {

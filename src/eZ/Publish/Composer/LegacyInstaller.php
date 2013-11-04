@@ -13,6 +13,10 @@ use Composer\Installer\LibraryInstaller;
 use Composer\Package\PackageInterface;
 use InvalidArgumentException;
 
+/**
+ * Base eZ Publish legacy installer.
+ * Provides the right directory to install files into.
+ */
 class LegacyInstaller extends LibraryInstaller
 {
     /**
@@ -33,16 +37,8 @@ class LegacyInstaller extends LibraryInstaller
         }
     }
 
-    /**
-     * Returns the installation path of a package
-     *
-     * @param  PackageInterface $package
-     * @return string           path
-     * @throws \InvalidArgumentException
-     */
     public function getInstallPath( PackageInterface $package )
     {
         return $this->ezpublishLegacyDir;
     }
-
 }

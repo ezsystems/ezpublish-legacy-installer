@@ -15,6 +15,10 @@ use Composer\Repository\InstalledRepositoryInterface;
 use Composer\Package\PackageInterface;
 use Composer\Util\Filesystem;
 
+/**
+ * Installer for eZ Publish legacy kernel.
+ * Allows soft updates, ensuring that an existing installation is not wiped out.
+ */
 class LegacyKernelInstaller extends LegacyInstaller
 {
     public function supports( $packageType )
@@ -25,8 +29,10 @@ class LegacyKernelInstaller extends LegacyInstaller
     /**
      * We override this because if install dir is '.', existence is not enough - we add for good measure a check for
      * existence of the "settings" folder
+     *
      * @param InstalledRepositoryInterface $repo
      * @param PackageInterface $package
+     *
      * @return bool
      */
     public function isInstalled( InstalledRepositoryInterface $repo, PackageInterface $package)
@@ -104,7 +110,9 @@ class LegacyKernelInstaller extends LegacyInstaller
     }
 
     /**
-     * @return string a unique temporary directory (full path)
+     * Returns a unique temporary directory (full path).
+     *
+     * @return string
      */
     protected function generateTempDirName()
     {
