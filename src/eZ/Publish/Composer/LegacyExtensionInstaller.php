@@ -27,7 +27,12 @@ class LegacyExtensionInstaller extends LegacyInstaller
     public function getInstallPath( PackageInterface $package )
     {
         list( $vendor, $packageName ) = explode( '/', $package->getPrettyName(), 2 );
-        return parent::getInstallPath( $package ) . '/extension/' . $packageName;
-    }
+        $extensionInstallPath = parent::getInstallPath( $package ) . '/extension/' . $packageName;
+        if ( $this->io->isVerbose() )
+        {
+            $this->io->write( "eZ Publish legacy extension directory is '$extensionInstallPath'" );
+        }
 
+        return $extensionInstallPath;
+    }
 }
