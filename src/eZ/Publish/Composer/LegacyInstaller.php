@@ -17,7 +17,7 @@ use InvalidArgumentException;
  * Base eZ Publish legacy installer.
  * Provides the right directory to install files into.
  */
-class LegacyInstaller extends LibraryInstaller
+abstract class LegacyInstaller extends LibraryInstaller
 {
     /**
      * eZ Publish legacy base dir.
