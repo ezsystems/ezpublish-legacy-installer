@@ -81,8 +81,11 @@ class LegacyKernelInstaller extends LegacyInstaller
 
         parent::install( $repo, $package );
 
-        /// @todo the following function fails too frequently on windows with .git stuff. We should probably fix it...
-        $this->copyRecursive( $this->ezpublishLegacyDir, $actualLegacyDir );
+        if ( $this->ezpublishLegacyDir != $actualLegacyDir )
+        {
+            /// @todo the following function fails too frequently on windows with .git stuff. We should probably fix it...
+            $this->copyRecursive( $this->ezpublishLegacyDir, $actualLegacyDir );
+        }
 
         // if parent::install installed binaries, then the resulting shell/bat stubs will not work. We have to redo them
         $this->removeBinaries( $package );
@@ -100,13 +103,19 @@ class LegacyKernelInstaller extends LegacyInstaller
 
         parent::update( $repo, $initial, $target );
 
-        /// @todo the following function fails too frequently on windows with .git stuff. We should probably fix it...
-        $this->copyRecursive( $this->ezpublishLegacyDir, $actualLegacyDir );
+        if ( $this->ezpublishLegacyDir != $actualLegacyDir )
+        {
+            /// @todo the following function fails too frequently on windows with .git stuff. We should probably fix it...
+            $this->copyRecursive( $this->ezpublishLegacyDir, $actualLegacyDir );
+        }
 
         // if parent::update installed binaries, then the resulting shell/bat stubs will not work. We have to redo them
         $this->removeBinaries( $target );
         $this->ezpublishLegacyDir = $actualLegacyDir;
         $this->installBinaries( $target );
+
+        $this->regenerateAutoloads();
+        $this->clearCaches();
     }
 
     public function uninstall( InstalledRepositoryInterface $repo, PackageInterface $package )
