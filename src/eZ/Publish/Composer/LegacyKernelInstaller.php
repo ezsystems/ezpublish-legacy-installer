@@ -57,10 +57,18 @@ class LegacyKernelInstaller extends LegacyInstaller
 
         $actualLegacyDir = $this->ezpublishLegacyDir;
         $this->ezpublishLegacyDir = $this->generateTempDirName();
+        if ( $this->io->isVerbose() )
+        {
+            $this->io->write( "Installing in temporary directory." );
+        }
 
         parent::install( $repo, $package );
 
         /// @todo the following function does not warn of any failures in copying stuff over. We should probably fix it...
+        if ( $this->io->isVerbose() )
+        {
+            $this->io->write( "Updating new code over existing installation." );
+        }
         $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
 
         // if parent::install installed binaries, then the resulting shell/bat stubs will not work. We have to redo them
@@ -77,10 +85,18 @@ class LegacyKernelInstaller extends LegacyInstaller
     {
         $actualLegacyDir = $this->ezpublishLegacyDir;
         $this->ezpublishLegacyDir = $this->generateTempDirName();
+        if ( $this->io->isVerbose() )
+        {
+            $this->io->write( "Installing in temporary directory." );
+        }
 
         $this->installCode( $target );
 
         $fileSystem = new Filesystem();
+        if ( $this->io->isVerbose() )
+        {
+            $this->io->write( "Updating new code over existing installation." );
+        }
         /// @todo the following function does not warn of any failures in copying stuff over. We should probably fix it...
         $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
 
@@ -92,7 +108,13 @@ class LegacyKernelInstaller extends LegacyInstaller
      */
     protected function generateTempDirName()
     {
-        /// @todo to be extremely safe, we should use PID+time
-        return sys_get_temp_dir() . '/' . uniqid( 'composer_ezlegacykernel_' );
+        // @todo to be extremely safe, we should use PID+time
+        $tmpDir = sys_get_temp_dir() . '/' . uniqid( 'composer_ezlegacykernel_' );
+        if ( $this->io->isVerbose() )
+        {
+            $this->io->write( "Temporary directory for ezpublish-legacy updates: $tmpDir" );
+        }
+
+        return $tmpDir;
     }
 }

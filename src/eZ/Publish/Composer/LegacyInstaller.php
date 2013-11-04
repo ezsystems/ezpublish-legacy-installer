@@ -27,6 +27,10 @@ class LegacyInstaller extends LibraryInstaller
         parent::__construct( $io, $composer, $type );
         $options = $composer->getPackage()->getExtra();
         $this->ezpublishLegacyDir = isset( $options['ezpublish-legacy-dir'] ) ? rtrim( $options['ezpublish-legacy-dir'], '/' ) : '.';
+        if ( $io->isVerbose() )
+        {
+            $io->write( "eZ Publish legacy base directory is '$this->ezpublishLegacyDir'" );
+        }
     }
 
     /**
