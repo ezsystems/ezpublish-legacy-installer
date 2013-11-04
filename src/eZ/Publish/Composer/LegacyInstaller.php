@@ -15,6 +15,11 @@ use InvalidArgumentException;
 
 class LegacyInstaller extends LibraryInstaller
 {
+    /**
+     * eZ Publish legacy base dir.
+     *
+     * @var string
+     */
     protected $ezpublishLegacyDir;
 
     public function __construct( IOInterface $io, Composer $composer, $type = '' )
