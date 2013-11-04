@@ -19,9 +19,9 @@ use Composer\Package\PackageInterface;
  */
 class LegacyExtensionInstaller extends LegacyInstaller
 {
-    public function __construct( IOInterface $io, Composer $composer, $type = 'ezpublish-legacy-extension' )
+    public function supports( $packageType )
     {
-        parent::__construct( $io, $composer, $type );
+        return $packageType === 'ezpublish-legacy-extension';
     }
 
     public function getInstallPath( PackageInterface $package )

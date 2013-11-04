@@ -17,9 +17,9 @@ use Composer\Util\Filesystem;
 
 class LegacyKernelInstaller extends LegacyInstaller
 {
-    public function __construct( IOInterface $io, Composer $composer, $type = 'ezpublish-legacy' )
+    public function supports( $packageType )
     {
-        parent::__construct( $io, $composer, $type );
+        return $packageType === 'ezpublish-legacy';
     }
 
     /**
