@@ -47,4 +47,23 @@ abstract class LegacyInstaller extends LibraryInstaller
 
         return $this->ezpublishLegacyDir;
     }
+
+    // *** code dealing with eZ Publish ***
+
+    protected function regenerateAutoloads()
+    {
+        $this->io->write( '<info>Regenerating eZPublish (LS) autoload configuration</info>' );
+        /// @todo should we use more options?
+        exec( "cd " . escapeshellarg( $this->ezpublishLegacyDir ) . " && php bin" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "ezpgenerateautoloads.php" );
+    }
+
+    /**
+     * @todo find a smart way to avoid clearing caches N times - do it only once when installing/removing last extension
+     */
+    protected function clearCaches()
+    {
+        $this->io->write( '<info>Clearing eZPublish caches (LS)</info>' );
+        // in case site has not been set up yet, ezcache.php seems to still work - it just writes var/cache/expiry.php
+        exec( "cd " . escapeshellarg( $this->ezpublishLegacyDir ) . " && php bin" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "ezcache.php --clear-all" );
+    }
 }
