@@ -25,6 +25,33 @@ Example for SQLIImport:
 }
 ```
 
+### Extension name vs package name
+By default, the legacy extension gets installed in a directory named by your package pretty name. For example, package `lolautruche/sqliimport` gets installed in a directory named `sqliimport`.
+If you ever need to name your composer package differently from your extension name (for example, legacy extension ezfind comes in a `ezsystems/ezfind-ls` package), you may tell composer to use a specifica extension name rather than the package's pretty name. Just add an `ezpublish-legacy-extension-name` extra option in your composer.json file :
+
+```json
+{
+    "name": "ezsystems/ezfind-ls",
+    "description": "eZ Find is a search extension for eZ Publish legacy, providing more functionality and better results than the default search in eZ Publish.",
+    "type": "ezpublish-legacy-extension",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "eZ Publish dev-team & eZ Community",
+            "homepage": "https://github.com/ezsystems/ezfind/contributors"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "ezsystems/ezpublish-legacy-installer": "*"
+    },
+    "extra": {
+        "ezpublish-legacy-extension-name": "ezfind"
+    }
+}
+
+```
+
 ## How to install in my project
 All you need to do is create a composer.json at the root of your project and require the extension
 (if the extension is not published on packagist, you also need to tell composer where to find it):
