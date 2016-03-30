@@ -94,7 +94,7 @@ class LegacyKernelInstaller extends LegacyInstaller
         }
         else
         {
-            $this->binaryInstaller->installBinaries( $package );
+            $this->binaryInstaller->installBinaries( $package, $this->getInstallPath( $package ) );
         }
     }
 
