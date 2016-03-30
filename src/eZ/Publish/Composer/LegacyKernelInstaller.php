@@ -78,7 +78,7 @@ class LegacyKernelInstaller extends LegacyInstaller
         $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
 
         // if parent::install installed binaries, then the resulting shell/bat stubs will not work. We have to redo them
-        if(method_exists($this,'removeBinaries'))
+        if( method_exists($this,'removeBinaries') )
         {
             $this->removeBinaries( $package );
         }
@@ -86,8 +86,16 @@ class LegacyKernelInstaller extends LegacyInstaller
         {
             $this->binaryInstaller->removeBinaries( $package );
         }
+
         $this->ezpublishLegacyDir = $actualLegacyDir;
-        $this->installBinaries( $package );
+        if( method_exists($this,'installBinaries') )
+        {
+            $this->installBinaries( $package );
+        }
+        else
+        {
+            $this->binaryInstaller->installBinaries( $package );
+        }
     }
 
     /**
