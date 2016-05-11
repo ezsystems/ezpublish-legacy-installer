@@ -37,7 +37,7 @@ class LegacyKernelInstaller extends LegacyInstaller
      */
     public function isInstalled( InstalledRepositoryInterface $repo, PackageInterface $package)
     {
-        return parent::isInstalled( $repo, $package ) && is_dir( $this->ezpublishLegacyDir . '/settings' );
+        return parent::isInstalled( $repo, $package ) && is_file( $this->ezpublishLegacyDir . '/settings/site.ini' );
     }
 
     /**
