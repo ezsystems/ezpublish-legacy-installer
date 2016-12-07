@@ -30,7 +30,7 @@ abstract class LegacyInstaller extends LibraryInstaller
     {
         parent::__construct( $io, $composer, $type );
         $options = $composer->getPackage()->getExtra();
-        $this->ezpublishLegacyDir = isset( $options['ezpublish-legacy-dir'] ) ? rtrim( $options['ezpublish-legacy-dir'], '/' ) : '.';
+        $this->ezpublishLegacyDir = isset( $options['ezpublish-legacy-dir'] ) ? rtrim( $options['ezpublish-legacy-dir'], '/' ) : 'ezpublish_legacy';
     }
 
     public function getInstallPath( PackageInterface $package )
