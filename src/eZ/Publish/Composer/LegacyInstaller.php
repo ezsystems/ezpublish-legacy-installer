@@ -30,7 +30,20 @@ abstract class LegacyInstaller extends LibraryInstaller
     {
         parent::__construct( $io, $composer, $type );
         $options = $composer->getPackage()->getExtra();
-        $this->ezpublishLegacyDir = isset( $options['ezpublish-legacy-dir'] ) ? rtrim( $options['ezpublish-legacy-dir'], '/' ) : '.';
+
+        if ( isset( $options['ezpublish-legacy-dir'] ) )
+        {
+            $this->ezpublishLegacyDir = rtrim( $options['ezpublish-legacy-dir'], '/' );
+        }
+        else if ( isset( $options['symfony-app-dir'] ) )
+        {
+            // For Symfony install (eZ Platform or otherwise), default to `ezpublish_legacy` to avoid messing up root folder
+            $this->ezpublishLegacyDir = 'ezpublish_legacy';
+        }
+        else
+        {
+            $this->ezpublishLegacyDir = '.';
+        }
     }
 
     public function getInstallPath( PackageInterface $package )
