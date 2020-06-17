@@ -14,6 +14,7 @@ use Composer\IO\IOInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 use Composer\Package\PackageInterface;
 use Composer\Util\Filesystem;
+use React\Promise\PromiseInterface;
 
 /**
  * Installer for eZ Publish legacy kernel.
@@ -56,6 +57,7 @@ class LegacyKernelInstaller extends LegacyInstaller
     {
         $downloadPath = $this->getInstallPath( $package );
         $fileSystem = new Filesystem();
+
         if ( !is_dir( $downloadPath ) || $fileSystem->isDirEmpty( $downloadPath ) )
         {
             return parent::install( $repo, $package );
@@ -63,39 +65,53 @@ class LegacyKernelInstaller extends LegacyInstaller
 
         $actualLegacyDir = $this->ezpublishLegacyDir;
         $this->ezpublishLegacyDir = $this->generateTempDirName();
+
         if ( $this->io->isVerbose() )
         {
             $this->io->write( "Installing in temporary directory." );
         }
 
-        parent::install( $repo, $package );
+        $install = function () use ( $fileSystem, $actualLegacyDir, $package )
+        {
+            /// @todo the following function does not warn of any failures in copying stuff over. We should probably fix it...
+            if ( $this->io->isVerbose() )
+            {
+                $this->io->write( "Updating new code over existing installation." );
+            }
 
-        /// @todo the following function does not warn of any failures in copying stuff over. We should probably fix it...
-        if ( $this->io->isVerbose() )
-        {
-            $this->io->write( "Updating new code over existing installation." );
-        }
-        $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
+            $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
 
-        // if parent::install installed binaries, then the resulting shell/bat stubs will not work. We have to redo them
-        if( method_exists($this,'removeBinaries') )
+            // if parent::install installed binaries, then the resulting shell/bat stubs will not work. We have to redo them
+            if ( method_exists($this, 'removeBinaries') )
+            {
+                $this->removeBinaries( $package );
+            }
+            else
+            {
+                $this->binaryInstaller->removeBinaries( $package );
+            }
+
+            $this->ezpublishLegacyDir = $actualLegacyDir;
+
+            if ( method_exists( $this, 'installBinaries' ) )
+            {
+                $this->installBinaries( $package );
+            }
+            else
+            {
+                $this->binaryInstaller->installBinaries( $package, $this->getInstallPath( $package ) );
+            }
+        };
+
+        $promise = parent::install( $repo, $package );
+        // Composer v2 might return a promise here
+        if ( $promise instanceof PromiseInterface )
         {
-            $this->removeBinaries( $package );
-        }
-        else
-        {
-            $this->binaryInstaller->removeBinaries( $package );
+            return $promise->then( $install );
         }
 
-        $this->ezpublishLegacyDir = $actualLegacyDir;
-        if( method_exists($this,'installBinaries') )
-        {
-            $this->installBinaries( $package );
-        }
-        else
-        {
-            $this->binaryInstaller->installBinaries( $package, $this->getInstallPath( $package ) );
-        }
+        // If not, execute the code right away as parent::install executed synchronously (composer v1, or v2 without async)
+        $install();
     }
 
     /**
@@ -106,22 +122,36 @@ class LegacyKernelInstaller extends LegacyInstaller
     {
         $actualLegacyDir = $this->ezpublishLegacyDir;
         $this->ezpublishLegacyDir = $this->generateTempDirName();
+
         if ( $this->io->isVerbose() )
         {
             $this->io->write( "Installing in temporary directory." );
         }
 
-        $this->installCode( $target );
-
-        $fileSystem = new Filesystem();
-        if ( $this->io->isVerbose() )
+        $installCode = function () use ( $actualLegacyDir )
         {
-            $this->io->write( "Updating new code over existing installation." );
-        }
-        /// @todo the following function does not warn of any failures in copying stuff over. We should probably fix it...
-        $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
+            $fileSystem = new Filesystem();
 
-        $this->ezpublishLegacyDir = $actualLegacyDir;
+            if ( $this->io->isVerbose() )
+            {
+                $this->io->write( "Updating new code over existing installation." );
+            }
+
+            /// @todo the following function does not warn of any failures in copying stuff over. We should probably fix it...
+            $fileSystem->copyThenRemove( $this->ezpublishLegacyDir, $actualLegacyDir );
+
+            $this->ezpublishLegacyDir = $actualLegacyDir;
+        };
+
+        $promise = $this->installCode( $target );
+        // Composer v2 might return a promise here
+        if ( $promise instanceof PromiseInterface )
+        {
+            return $promise->then( $installCode );
+        }
+
+        // If not, execute the code right away as parent::installCode executed synchronously (composer v1, or v2 without async)
+        $installCode();
     }
 
     /**
