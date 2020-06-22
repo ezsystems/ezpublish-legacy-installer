@@ -21,6 +21,7 @@
         "class": "eZ\\Publish\\Composer\\InstallerPlugin"
     },
     "require": {
+        "php": "^5.4 || ^7.0",
         "composer-plugin-api": "^1.0 || ^2.0"
     }
 }
